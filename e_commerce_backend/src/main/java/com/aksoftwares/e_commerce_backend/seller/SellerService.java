@@ -15,9 +15,6 @@ public class SellerService {
         if(sellerRepo.existsByEmail(seller.getEmail())) {
             return null;
         }
-
-    
-
         return sellerRepo.save(seller);
     }
 }
