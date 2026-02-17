@@ -1,4 +1,5 @@
-package com.aksoftwares.e_commerce_backend.user;
+package com.aksoftwares.e_commerce_backend.customer;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,11 +10,11 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface UserRepo extends JpaRepository<User, String>{
+public interface CustomerRepo extends JpaRepository<Customer, String>{
 
-    @Query("select u from User u where u.email = :email")
-    User findByEmail(String email);
+    @Query("select c from Customer c where c.email = :email")
+    Customer findByEmail(String email);
 
-    @Query("select count(u) > 0 from User u where u.email = :email")
+    @Query("select count(c) > 0 from Customer c where c.email = :email")
     boolean existsByEmail(@Param("email") String email);
 }

@@ -37,7 +37,7 @@ public class OtpController {
         OtpVerification otpVerification = new OtpVerification();
         otpVerification.setEmail(email);
         otpVerification.setOtp(otp);
-        otpVerification.setExpiryTime(LocalDateTime.now().plusMinutes(5l));
+        otpVerification.setExpiryTime(LocalDateTime.now().plusMinutes(2l));
 
         otpRepo.save(otpVerification);
 

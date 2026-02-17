@@ -1,13 +1,23 @@
-package com.aksoftwares.e_commerce_backend.user;
+package com.aksoftwares.e_commerce_backend.customer;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-public class User {
+public class Customer {
     @Id
+    @GeneratedValue(generator = "customer-id-generator")
+    @GenericGenerator(
+        name = "customer-id-generator",
+        strategy = "com.aksoftwares.e_commerce_backend.prefixes.CustomerIdGenerator"
+    )
+    private String id;
+
+    @Column(unique= true, nullable = false)
     private String email;
 
     private String name;
@@ -45,5 +55,4 @@ public class User {
     public String getPassword() {
         return password;
     }
-
 }
