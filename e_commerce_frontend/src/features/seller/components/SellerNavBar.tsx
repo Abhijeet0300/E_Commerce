@@ -2,14 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { Constants } from "../../../utils/Constants";
 import { useNavigate } from "react-router-dom";
 import NavButton from "../../../components/common/NavButton";
+import { PageNavigation } from "../../../utils/PageNavigation";
+import { SellerConstants } from "../SellerConstants";
 
-const SellerNavBar: React.FC = () => {
+interface SellerNavBarProps {
+  activeItem: string;
+  setActiveItem: (activeItem: string) => void;
+};
+
+const SellerNavBar: React.FC<SellerNavBarProps> = ({activeItem, setActiveItem}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const [activeItem, setActiveItem] = useState("Dashboard");
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -28,23 +34,23 @@ const SellerNavBar: React.FC = () => {
   const handleLogout = () => {
     // Add your logout logic here (e.g., clear tokens)
     console.log("Logging out...");
-    navigate("/login");
+    navigate(PageNavigation.LOGIN_SCREEN);
   };
 
   //SideBar items
   const sidebarItems = [
-    { label: "Dashboard", icon: "📊" },
-    { label: "Total Bikes", icon: "🏍️" },
-    { label: "Total Orders", icon: "🛒" },
-    { label: "Total Revenue", icon: "💰" },
-    { label: "Pending Orders", icon: "⏳" },
-    { label: "Add Bike", icon: "🏍️" },
+    { label: SellerConstants.DASHBOARD, icon: "📊" },
+    { label: SellerConstants.TOTAL_BIKES, icon: "🏍️" },
+    { label: SellerConstants.TOTAL_ORDERS, icon: "🛒" },
+    { label: SellerConstants.TOTAL_REVENUE, icon: "💰" },
+    { label: SellerConstants.PENDING_ORDERS, icon: "⏳" },
+    { label: SellerConstants.ADD_BIKE, icon: "🏍️" },
   ];
 
   const handleItemClick = (label: string) => {
     setActiveItem(label); // Set the new active color
-    setIsSidebarOpen(false); // Optional: Close sidebar after selection
-    // navigate("/dashboard"); // You can add navigation here later
+    setIsSidebarOpen(false);
+    return label; 
   };
 
   return (
@@ -59,7 +65,7 @@ const SellerNavBar: React.FC = () => {
         {/* Title */}
         <div
           className="flex items-center cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(PageNavigation.SELLER_HOME_SCREEN)}
         >
           <h1 className="font-iceland text-4xl font-bold text-gray-800 tracking-wide">
             {Constants.APP_NAME}
@@ -175,9 +181,7 @@ const SellerNavBar: React.FC = () => {
             return (
               <button
                 key={index}
-                onClick={() => {
-                  handleItemClick(item.label);
-                }}
+                onClick = { () => {handleItemClick(item.label)} }
                 className={`flex items-center gap-3 w-full px-4 py-3 text-left rounded-lg transition-all duration-200 group ${
                   isActive
                     ? "bg-blue-100 text-blue-600 font-semibold shadow-sm" // Active Style

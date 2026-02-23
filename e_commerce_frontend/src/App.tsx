@@ -5,14 +5,13 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Login from "./features/auth/Login";
 import CustomerRegistration from "./features/auth/CustomerRegistration";
 import Home from "./features/home/Home";
-import OtpVerification from "./features/auth/OtpVerification";
 import LoginScreen from "./features/auth/LoginScreen";
 import SellerRegistrationPage from "./features/seller/SellerRegistrationPage";
 import { PageNavigation } from "./utils/PageNavigation";
 import SellerHome from "./features/seller/SellerHome";
+import AddBike from "./features/seller/AddBike";
 
 function App() {
   return (
@@ -30,11 +29,8 @@ function App() {
         />
         <Route path="/home" element={<Home />} />
         {/* <Route path="/verify-otp" element={<OtpVerification onVerify={}/>} /> */}
-        <Route
-          path="/seller_registration"
-          element={<SellerRegistrationPage />}
-        />
         <Route path={PageNavigation.SELLER_HOME_SCREEN} element={<SellerHome />} />
+        <Route path={PageNavigation.ADD_BIKE} element={<AddBike />} />
       </Routes>
     </Router>
   );

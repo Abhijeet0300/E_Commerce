@@ -51,11 +51,18 @@ export const verifyOtp = async (email: string, otp: string) => {
 //Seller Login
 
 export const sellerLogin = async (email: string, password: string) => {
-    const response = await axios.post(`${API_URL}/seller/login`, {
+  try {
+    const response = await axios.post(`${API_URL}/seller/seller-login`, {
       email,
       password,
     });
-    return response.data;
+    return response.data; // Seller object
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new Error("Invalid email or password");
+    }
+    throw error;
+  }
 };
 
 export const registerSeller = async (data: Map<string, string>) => {
@@ -66,6 +73,27 @@ export const registerSeller = async (data: Map<string, string>) => {
     });
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+//Add Bike
+
+export const addBike = async (bikeData : any, imageFile : File) => {
+  const formData = new FormData();
+
+  formData.append("bike", new Blob([JSON.stringify(bikeData)], {type: "application/json"}));
+  formData.append("image", imageFile);
+
+  try{
+    const response = await axios.post(`${API_URL}/bike/addBike`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch(error) {
     throw error;
   }
 };
