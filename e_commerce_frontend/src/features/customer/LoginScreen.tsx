@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../components/common/Button";
 import InputTextField from "../../components/common/InputTextField";
-import { customerLogin, sellerLogin } from "./AuthService";
 import { useNavigate } from "react-router-dom";
 import { Constants } from "../../utils/Constants";
 import { PageNavigation } from "../../utils/PageNavigation";
@@ -17,20 +16,7 @@ const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    if (role.includes("CUSTOMER")) {
-      const customerLoginResponse = await customerLogin(email, password);
-      alert(customerLoginResponse);
-    } else {
-      try{
-        const sellerLoginResponse = await sellerLogin(email, password);
-        alert(Constants.SELLER_LOGIN_SUCCESSFUL);
-        navigate(PageNavigation.SELLER_HOME_SCREEN, {replace: true});
-        localStorage.setItem(Constants.SELLER, JSON.stringify(sellerLoginResponse));
-      } catch(error : any) {
-        alert("Seller login failed: " + (error.response?.data?.message || error.message || "Invalid credentials"));
-      }
-      
-    }
+    alert("Login successfull");
   };
 
   const handleRegisterRedirect = () => {

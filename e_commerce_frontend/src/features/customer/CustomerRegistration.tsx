@@ -1,15 +1,20 @@
-import type React from "react";
+import React, {type ChangeEvent, useEffect} from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import InputTextField from "../../components/common/InputTextField";
 import Button from "../../components/common/Button";
 
-import { otpGenerate } from "./AuthService";
 import OtpVerification from "./OtpVerification";
-import { VerificationType } from "../../utils/VerificationType";
 import Title from "../../components/common/Title";
 import { PageNavigation } from "../../utils/PageNavigation";
+import {fetchAllCountryByNames} from "../api/OtherApis.ts";
+import DropdownField from "../../components/common/DropdownField.tsx";
+import {generateOtp} from "../api/Api.ts";
+import type {OtpResponse} from "../../utils/otp/OtpResponse.ts";
+import Loader from "../../components/common/Loader.tsx";
+import type {RegisterCustomerResponse} from "./models/RegisterCustomerResponse.ts";
+import {registerCustomer} from "./CustomerApis.ts";
 
 const CustomerRegistration: React.FC = () => {
   const [name, setName] = useState("");
@@ -17,17 +22,54 @@ const CustomerRegistration: React.FC = () => {
   const [phoneNumber, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [step, setStep] = useState(1);
+  const [country, setCountry] = useState("");
+  const [countries, setCountries] = useState<string[]>([]);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [buttonText, setButtonText] = useState("Send Otp");
+
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(1);
+  const payload = {
+    name: name,
+    email: email,
+    phone: phoneNumber,
+    address: address,
+    country: country,
+    password: password
+  }
 
-  let data = new Map<string, string>([
-    ["name", name],
-    ["email", email],
-    ["phone", phoneNumber],
-    ["password", password],
-  ]);
+  useEffect(() => {
+    const loadCountries = async () => {
+      const response = await fetchAllCountryByNames();
+      setCountries(response);
+    };
+    loadCountries();
+  }, []);
 
+  const validateForm = () => {
+    if (
+        !name.trim() ||
+        !email.trim() ||
+        !phoneNumber.trim() ||
+        !address.trim() ||
+        !country ||
+        !password ||
+        !confirmPassword
+    ) {
+      alert("All fields are required. Please fill out the entire form.");
+      return false;
+    }
+    return true;
+  }
+
+  const handleCountryChange = (event : ChangeEvent<HTMLSelectElement>) => {
+    setCountry(event.target.value);
+  }
+  const handleAddressChange = (event : React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value);
+  }
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -51,19 +93,52 @@ const CustomerRegistration: React.FC = () => {
   };
 
   const handleRegister = async () => {
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+    if(!validateForm()) {
       return;
     }
 
-    try {
-      const otpResponse = await otpGenerate(email);
-      alert(otpResponse);
-      setStep(2);
-    } catch (error) {
-      console.log(error);
+    if(isEmailVerified) {
+      alert("Email verified");
+      setStep(3);
+      try {
+        const response : RegisterCustomerResponse = await registerCustomer(payload);
+        if(response.registered) {
+          alert(response.message);
+          navigate(PageNavigation.LOGIN_SCREEN);
+        } else {
+          alert(response.message);
+          setStep(1);
+        }
+      } catch (error : any) {
+        alert(error.message);
+        setStep(1);
+      }
+      return;
+    } else {
+      try {
+        setStep(3);
+        const response : OtpResponse = await generateOtp(email);
+        if(response.success) {
+          alert(response.message);
+          setButtonText("Register");
+          setStep(2);
+        } else {
+          alert(response.message);
+          setStep(1);
+        }
+      } catch (error : any) {
+        alert(error.message);
+        setStep(1);
+      }
+      return;
     }
   };
+
+  const handleVerificationSuccess = () => {
+    setIsEmailVerified(true);
+    setStep(1);
+  }
+
 
   return (
     <>
@@ -102,6 +177,20 @@ const CustomerRegistration: React.FC = () => {
                 onChange={handlePhoneChange}
               />
               <InputTextField
+                label="Address"
+                inputType="text"
+                placeholder="Enter your address"
+                value={address}
+                onChange={handleAddressChange}
+                />
+              <DropdownField
+                label="Country"
+                options={countries}
+                value={country}
+                onChange={handleCountryChange}
+                placeholder="Select your country"
+                />
+              <InputTextField
                 label="Password"
                 inputType="password"
                 placeholder="Enter your password"
@@ -116,7 +205,7 @@ const CustomerRegistration: React.FC = () => {
                 onChange={handleConfirmPasswordChange}
               />
               <div className="text-center">
-                <Button text="Register" onClick={handleRegister} />
+                <Button text={buttonText} onClick={handleRegister} />
               </div>
             </form>
             <p className="mt-4 text-center">
@@ -130,11 +219,13 @@ const CustomerRegistration: React.FC = () => {
 
       {step === 2 && (
         <OtpVerification
-          verificationType={VerificationType.CUSTOMER_REGISTRATION}
           email={email}
-          data={data}
+          onVerified={handleVerificationSuccess}
         />
       )}
+
+      {step === 3 && (<Loader />)}
+
     </>
   );
 };

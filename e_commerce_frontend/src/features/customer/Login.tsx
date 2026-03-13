@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { customerLogin } from "./AuthService";
+import { customerLogin } from "../api/Api.ts";
 
 import InputTextField from "../../components/common/InputTextField";
 import Button from "../../components/common/Button";
