@@ -2,19 +2,19 @@ import React, {type ChangeEvent, useEffect} from "react";
 import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-import InputTextField from "../../components/common/InputTextField";
-import Button from "../../components/common/Button";
+import InputTextField from "../../components/common/InputTextField.tsx";
+import Button from "../../components/common/Button.tsx";
 
-import OtpVerification from "./OtpVerification";
-import Title from "../../components/common/Title";
-import { PageNavigation } from "../../utils/PageNavigation";
+import OtpVerification from "./OtpVerification.tsx";
+import Title from "../../components/common/Title.tsx";
+import { PageNavigation } from "../../utils/PageNavigation.ts";
 import {fetchAllCountryByNames} from "../api/OtherApis.ts";
 import DropdownField from "../../components/common/DropdownField.tsx";
 import {generateOtp} from "../api/Api.ts";
 import type {OtpResponse} from "../../utils/otp/OtpResponse.ts";
 import Loader from "../../components/common/Loader.tsx";
-import type {RegisterCustomerResponse} from "./models/RegisterCustomerResponse.ts";
-import {registerCustomer} from "./CustomerApis.ts";
+import type {RegisterCustomerResponse} from "../customer/responses/RegisterCustomerResponse.ts";
+import {registerCustomer} from "../customer/CustomerApis.ts";
 
 const CustomerRegistration: React.FC = () => {
   const [name, setName] = useState("");

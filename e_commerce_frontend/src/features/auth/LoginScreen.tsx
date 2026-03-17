@@ -1,22 +1,62 @@
-import React, { useState } from "react";
-import Button from "../../components/common/Button";
-import InputTextField from "../../components/common/InputTextField";
+import React, {useEffect, useState} from "react";
+import Button from "../../components/common/Button.tsx";
+import InputTextField from "../../components/common/InputTextField.tsx";
 import { useNavigate } from "react-router-dom";
-import { Constants } from "../../utils/Constants";
-import { PageNavigation } from "../../utils/PageNavigation";
-import Title from "../../components/common/Title";
+import { Constants } from "../../utils/Constants.ts";
+import { PageNavigation } from "../../utils/PageNavigation.ts";
+import Title from "../../components/common/Title.tsx";
+import type {LoginSellerResponse} from "../seller/responses/LoginSellerResponse.ts";
+import {loginSeller} from "../api/Api.ts";
 
 type UserRole = "CUSTOMER" | "SELLER";
 
 const LoginScreen: React.FC = () => {
-  const [role, setRole] = useState<UserRole>("CUSTOMER");
 
+  const [role, setRole] = useState<UserRole>("CUSTOMER");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const payload = {
+    email : email,
+    password: password
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const savedRole = localStorage.getItem("role");
+
+    if (token) {
+      if (savedRole === "SELLER") {
+        navigate(PageNavigation.SELLER_HOME_SCREEN);
+      } else if (savedRole === "CUSTOMER") {
+        navigate(PageNavigation.CUSTOMER_HOME_SCREEN);
+      }
+    }
+
+  }, [navigate]);
+
   const handleLogin = async () => {
-    alert("Login successfull");
+
+    if (role.includes("CUSTOMER")) {
+      alert("Login successfully");
+    } else {
+      try {
+        const response : LoginSellerResponse = await loginSeller(payload);
+        if(response.success) {
+          localStorage.setItem("token", response.jwtToken);
+          localStorage.setItem("data", JSON.stringify(response.data));
+          localStorage.setItem("role", "SELLER");
+          alert(response.message);
+          navigate(PageNavigation.SELLER_HOME_SCREEN);
+        } else {
+          alert(response.message);
+        }
+      } catch (error : any) {
+        alert(error.message);
+      }
+    }
+
   };
 
   const handleRegisterRedirect = () => {

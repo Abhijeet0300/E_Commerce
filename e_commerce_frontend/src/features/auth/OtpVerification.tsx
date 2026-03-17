@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/common/Button";
-import InputTextField from "../../components/common/InputTextField";
-import Title from "../../components/common/Title";
+import Button from "../../components/common/Button.tsx";
+import InputTextField from "../../components/common/InputTextField.tsx";
+import Title from "../../components/common/Title.tsx";
 import type {VerifiedOtpResponse} from "../../utils/otp/VerifiedOtpResponse.ts";
 import {generateOtp, verifyOtp} from "../api/Api.ts";
 import type {OtpResponse} from "../../utils/otp/OtpResponse.ts";

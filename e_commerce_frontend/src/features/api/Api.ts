@@ -25,3 +25,25 @@ export const verifyOtp = async (payload : {email : string, otp : string}) => {
     }
 }
 
+export const registerSeller = async (
+    payload : {ownerName : string, storeName:string, email : string, phone : string, password: string, address : string, country: string}
+) => {
+    try{
+        const response = await axios.post(`${API_URL}/seller/register`, payload)
+        return response.data;
+    } catch (error : any) {
+        throw new Error(error.message);
+    }
+}
+
+export const loginSeller = async (
+    payload : {email : string, password : string}
+) => {
+    try {
+        const response = await axios.post(`${API_URL}/seller/login`, payload);
+        return response.data;
+    } catch (error : any) {
+        throw new Error(error.message);
+    }
+}
+
