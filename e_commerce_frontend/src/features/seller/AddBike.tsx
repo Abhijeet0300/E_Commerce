@@ -1,12 +1,31 @@
-import type React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
 
 import Button from "../../components/common/Button"
 import InputTextField from "../../components/common/InputTextField";
 import AddBikeTitle from "./components/AddBikeTitle.tsx";
+import type {SellerData} from "./responses/SellerData.ts";
+import {useNavigate} from "react-router-dom";
+import {PageNavigation} from "../../utils/PageNavigation.ts";
 
 
 const AddBike: React.FC = () => {
+
+    const navigate = useNavigate();
+    const [sellerData, setSellerData] = useState<SellerData | null>(() => {
+        const rawData = localStorage.getItem("userData"); // Check your key!
+        if (rawData) {
+            return JSON.parse(rawData);
+        }
+        return null;
+    });
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(!token) {
+            navigate(PageNavigation.LOGIN_SCREEN);
+        }
+    }, [navigate]);
 
     const [form, setForm] = useState({
       bikeName: "",
@@ -16,8 +35,20 @@ const AddBike: React.FC = () => {
       bhp: 0.0,
       price: 0.0,
       desc: "",
-      imageUrl: null as File | null,
     });
+
+    const payload = {
+        bikeName: form.bikeName,
+        brand: form.brand,
+        cc: form.cc,
+        torque: form.torque,
+        bhp: form.bhp,
+        price: form.price,
+        desc: form.desc,
+        sellerId : sellerData?.id,
+        sellerName : sellerData?.ownerName,
+        storeName : sellerData?.storeName
+    };
 
     const handleChange = (field : string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [field]: e.target.value });

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/seller")
-@CrossOrigin(origins = ApiConstant.FRONTEND_URL)
 public class SellerController {
     @Autowired
     private SellerService sellerService;

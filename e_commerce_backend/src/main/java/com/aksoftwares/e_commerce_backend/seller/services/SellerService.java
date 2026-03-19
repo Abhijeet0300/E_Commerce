@@ -67,6 +67,7 @@ public class SellerService {
             Seller seller = sellerRepo.findByEmail(loginRequest.getEmail());
 
             Data data =  new Data();
+            data.setSellerId(seller.getId());
             data.setEmail(seller.getEmail());
             data.setCountry(seller.getCountry());
             data.setPhone(seller.getPhone());

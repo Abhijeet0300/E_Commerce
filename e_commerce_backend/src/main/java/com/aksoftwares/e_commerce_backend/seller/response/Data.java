@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Data {
+    private String sellerId;
     private String ownerName;
     private String email;
     private String storeName;
