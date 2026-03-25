@@ -1,30 +1,34 @@
 package com.aksoftwares.e_commerce_backend.config;
 
-import com.aksoftwares.e_commerce_backend.auth.MultiCollectionAuthenticationProvider;
-import com.aksoftwares.e_commerce_backend.auth.service.SellerDetailsService;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-import java.util.List;
+import com.aksoftwares.e_commerce_backend.auth.MultiCollectionAuthenticationProvider;
+import com.aksoftwares.e_commerce_backend.handler.OAuth2LoginClientSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
 
     private final MultiCollectionAuthenticationProvider customAuthenticationProvider;
+    private final OAuth2LoginClientSuccessHandler oauth2Auth2LoginClientSuccessHandler;
 
-    public SecurityConfig(MultiCollectionAuthenticationProvider customAuthenticationProvider) {
+    public SecurityConfig(
+        MultiCollectionAuthenticationProvider customAuthenticationProvider,
+        OAuth2LoginClientSuccessHandler oAuth2LoginClientSuccessHandler
+    ) {
         this.customAuthenticationProvider = customAuthenticationProvider;
+        this.oauth2Auth2LoginClientSuccessHandler = oAuth2LoginClientSuccessHandler;
     }
 
     @Bean
@@ -33,8 +37,17 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
-                         auth.requestMatchers("/api/seller/register", "/api/seller/login","/api/customer/register", "/api/customer/login").permitAll()
+                         auth.requestMatchers(
+                            "/api/seller/register",
+                            "/api/seller/login",
+                            "/api/customer/register", 
+                            "/api/customer/login",
+                            "/api/auth/google-init"
+                        ).permitAll()
                                  .anyRequest().authenticated()
+                )
+                .oauth2Login(oAuth2 ->
+                    oAuth2.successHandler(oauth2Auth2LoginClientSuccessHandler)
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

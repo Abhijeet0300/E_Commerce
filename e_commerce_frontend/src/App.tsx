@@ -1,19 +1,19 @@
 import "./App.css";
+
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
+
 import CustomerRegistration from "./features/auth/CustomerRegistration.tsx";
 import Home from "./features/home/Home";
 import LoginScreen from "./features/auth/LoginScreen.tsx";
-// import SellerRegistrationPage from "./features/seller/SellerRegistrationPage";
 import { PageNavigation } from "./utils/PageNavigation";
 import SellerRegistrationPage from "./features/auth/SellerRegistrationPage.tsx";
-import SellerHome from "./features/seller/SellerHome.tsx";
-// import SellerHome from "./features/seller/SellerHome";
-// import AddBike from "./features/seller/AddBike";
+import Dashboard from "./features/seller/ui/Dashboard.tsx";
+
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
           element={<SellerRegistrationPage />}
         />
 
-        <Route path={PageNavigation.SELLER_HOME_SCREEN} element={<SellerHome />} />
+        <Route path={PageNavigation.SELLER_DASHBOARD} element={<Dashboard />} />
 
         <Route path="/home" element={<Home />} />
       </Routes>

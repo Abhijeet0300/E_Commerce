@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+.client.json
 
 src/main/resources/application.properties

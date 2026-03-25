@@ -3,7 +3,7 @@ export const PageNavigation = {
     CUSTOMER_REGISTRATION_SCREEN : "/customerRegistrationScreen",
     SELLER_REGISTRATION_SCREEN : "/sellerRegistrationScreen",
     CUSTOMER_HOME_SCREEN : "/customerHomeScreen",
-    SELLER_HOME_SCREEN : "/sellerHomeScreen",
+    SELLER_DASHBOARD : "/sellerDashboard",
     ADD_BIKE: "/addBike"
 } as const;
 

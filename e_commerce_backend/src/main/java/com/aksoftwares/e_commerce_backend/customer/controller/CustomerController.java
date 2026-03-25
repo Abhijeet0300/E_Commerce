@@ -2,7 +2,7 @@ package com.aksoftwares.e_commerce_backend.customer.controller;
 
 import com.aksoftwares.e_commerce_backend.customer.CustomerConstants;
 import com.aksoftwares.e_commerce_backend.customer.model.Customer;
-import com.aksoftwares.e_commerce_backend.customer.model.RegisteredCustomerResponse;
+import com.aksoftwares.e_commerce_backend.customer.responses.RegisteredCustomerResponse;
 import com.aksoftwares.e_commerce_backend.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
