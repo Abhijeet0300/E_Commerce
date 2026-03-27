@@ -72,7 +72,7 @@ public class SellerService {
             data.setCountry(seller.getCountry());
             data.setPhone(seller.getPhone());
             data.setAddress(seller.getAddress());
-            data.setOwnerName(seller.getOwnerName());
+            data.setSellerName(seller.getSellerName());
             data.setStoreName(seller.getStoreName());
 
             loginSellerResponse.setSuccess(true);

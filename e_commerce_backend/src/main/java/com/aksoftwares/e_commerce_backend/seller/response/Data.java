@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Data {
     private String sellerId;
-    private String ownerName;
+    private String sellerName;
     private String email;
     private String storeName;
     private String phone;
