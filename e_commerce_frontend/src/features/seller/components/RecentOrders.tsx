@@ -42,7 +42,7 @@ const RecentOrders: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden space-grotesk-fontTheme">
       <div className="p-8 border-b border-gray-100">
         <h3 className="text-sm font-bold tracking-widest text-gray-900 uppercase">
           Recent Orders

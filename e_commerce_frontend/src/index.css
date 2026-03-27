@@ -4,3 +4,15 @@
   --font-iceland: "Iceland", cursive;
   --color-button: #000000;
 }
+
+/* @theme {
+  --font-space-grotesk: "Space Grotesk", :cursive;
+  --color-button: #000000;
+} */
+
+
+.space-grotesk-fontTheme {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}

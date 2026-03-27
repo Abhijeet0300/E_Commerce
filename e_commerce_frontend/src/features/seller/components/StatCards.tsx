@@ -36,7 +36,7 @@ const StatCard: React.FC<StatCardProps> = ({
 
 const StatCards: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="space-grotesk-fontTheme grid grid-cols-1 md:grid-cols-3 gap-6">
       <StatCard
         title="Total Sales"
         value="₹12,450.00"

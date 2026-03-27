@@ -1,6 +1,6 @@
 export interface SellerData {
-    id : string;
-    ownerName: string;
+    sellerId : string;
+    sellerName: string;
     email: string;
     storeName: string;
     phone: string;
