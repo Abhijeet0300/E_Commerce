@@ -13,6 +13,7 @@ import LoginScreen from "./features/auth/LoginScreen.tsx";
 import { PageNavigation } from "./utils/PageNavigation";
 import SellerRegistrationPage from "./features/auth/SellerRegistrationPage.tsx";
 import Dashboard from "./features/seller/ui/Dashboard.tsx";
+import AddBike from "./features/products/ui/AddBike.tsx";
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
         />
 
         <Route path={PageNavigation.SELLER_DASHBOARD} element={<Dashboard />} />
+
+        {/* <Route path={PageNavigation.ADD_BIKE} element={<AddBike />} /> */}
 
         <Route path="/home" element={<Home />} />
       </Routes>

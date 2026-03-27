@@ -17,7 +17,7 @@ public class Seller {
     @Id
     private String id;
 
-    private String ownerName;
+    private String sellerName;
 
     private String storeName;
 

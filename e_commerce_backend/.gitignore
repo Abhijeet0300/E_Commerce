@@ -33,4 +33,5 @@ build/
 .vscode/
 .client.json
 
-src/main/resources/application.properties
+/src/main/resources/application.properties
+client.json

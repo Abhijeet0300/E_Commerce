@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center space-x-6">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 space-grotesk-fontTheme" />
           <input
             type="text"
             placeholder="SEARCH SYSTEM..."
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
           <Bell className="w-5 h-5" />
         </button>
 
-        <div className="relative" ref={dropDownRef}>
+        <div className="relative space-grotesk-fontTheme" ref={dropDownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className={`transition-colors flex items-center focus:outline-none ${
@@ -85,7 +85,6 @@ const Navbar: React.FC = () => {
               </button>
             </div>
           )}
-
         </div>
       </div>
     </header>

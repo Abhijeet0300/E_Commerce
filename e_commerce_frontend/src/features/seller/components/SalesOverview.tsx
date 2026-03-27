@@ -7,7 +7,7 @@ const SalesOverview: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
       {/* Header */}
-      <div className="flex justify-between items-center mb-12">
+      <div className="flex justify-between items-center mb-12 space-grotesk-fontTheme">
         <h3 className="text-sm font-bold tracking-widest text-gray-900 uppercase">
           Sales Overview
         </h3>

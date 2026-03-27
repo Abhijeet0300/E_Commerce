@@ -1,32 +1,28 @@
 package com.aksoftwares.e_commerce_backend.products.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-@Document("bike")
+@Document("motorcycle")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Bike {
+public class Motorcycle {
 
     @Id
     private String id;
 
     @NotBlank(message = "Bike name cannot be empty")
-    private String bikeName;
+    private String motorcycleName;
 
     @NotBlank(message = "Manufacturer is required")
     private String manufacturer;
@@ -47,12 +43,10 @@ public class Bike {
 
     private String desc;
 
-    @NotBlank(message = "Store name is required")
-    private String storeName;
-
-    @NotBlank(message = "Seller name is required")
-    private String sellerName;
-
     @NotBlank(message = "Seller ID is required")
     private String sellerId;
+
+    private int stockQuantity;
+    private List<String> imageUrls;
+    private String status = "In Stock";
 }
