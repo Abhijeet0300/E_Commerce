@@ -20,7 +20,7 @@ public interface MotorcycleRepo extends MongoRepository<Motorcycle, String> {
     List<Motorcycle> findByModel(String model);
 
     @Query(" 'sellerId' : ?0 ")
-    Optional<List<Motorcycle>> findBySellerId(String sellerId);
+    List<Motorcycle> findBySellerId(String sellerId);
 
     @Query(" 'bikeName' : ?0 ")
     List<Motorcycle> findByBikeName(String bikeName);

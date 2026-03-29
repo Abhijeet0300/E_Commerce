@@ -35,10 +35,10 @@ public class MotorcycleService {
     public FetchMotorcyclesResponseModel getMotorcycles(String sellerId) {
         FetchMotorcyclesResponseModel responseModel = new FetchMotorcyclesResponseModel();
         try {
-            Optional<List<Motorcycle>> motorcycle = motorcycleRepo.findBySellerId(sellerId);
-            if(motorcycle.isPresent()) {
+            List<Motorcycle> motorcycles = motorcycleRepo.findBySellerId(sellerId);
+            if(!motorcycles.isEmpty()) {
                 responseModel.setSuccess(true);
-                responseModel.setData(motorcycle.get());
+                responseModel.setData(motorcycles);
                 responseModel.setMessage(MotorcycleConstants.MOTORCYCLES_FOUND.getValue());
             } else {
                 responseModel.setSuccess(false);
