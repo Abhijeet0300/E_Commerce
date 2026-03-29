@@ -23,9 +23,9 @@ const LoginScreen: React.FC = () => {
   }
 
   useEffect(() => {
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("data");
-    // localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    localStorage.removeItem("data");
+    localStorage.removeItem("role");
 
     // 1. Check for incoming Google OAuth data in the URL
     const searchParams = new URLSearchParams(location.search);

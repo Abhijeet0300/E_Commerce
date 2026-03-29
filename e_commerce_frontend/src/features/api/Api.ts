@@ -102,6 +102,12 @@ export const getMotorcycles = async (token : string, sellerId : string) => {
             },
 
         });
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Session expired. Please log out and log back in.");
+          }
+          throw new Error(`Server returned status: ${response.status}`);
+        }
         const data = await response.json();
         return data;
     } catch ( error : any) {

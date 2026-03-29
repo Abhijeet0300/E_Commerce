@@ -297,7 +297,10 @@ const Products : React.FC = () => {
                         <button className="hover:text-gray-900 transition-colors">
                           <Icons.Pencil />
                         </button>
-                        <button className="hover:text-red-600 transition-colors">
+                        <button 
+                          className="hover:text-red-600 transition-colors"
+                          onClick={() => {}}
+                        >
                           <Icons.Trash />
                         </button>
                       </div>

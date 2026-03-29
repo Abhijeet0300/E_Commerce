@@ -3,6 +3,7 @@ package com.aksoftwares.e_commerce_backend.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class SecurityConfig {
     private final MultiCollectionAuthenticationProvider customAuthenticationProvider;
     private final OAuth2LoginClientSuccessHandler oauth2Auth2LoginClientSuccessHandler;
     private final JwtFilter jwtFilter;
+
+    @Value("${cors.allowed-origins}")
+    private String allowedOrigins;
 
     public SecurityConfig(
         MultiCollectionAuthenticationProvider customAuthenticationProvider,
@@ -82,7 +86,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+        corsConfiguration.setAllowedOrigins(List.of(allowedOrigins));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         corsConfiguration.setAllowCredentials(true);
