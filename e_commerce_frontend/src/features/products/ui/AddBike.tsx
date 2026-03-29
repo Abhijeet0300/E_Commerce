@@ -162,6 +162,8 @@ const AddBike : React.FC = () => {
     }
   }
 
+  const handleDelete = () => {}
+
     return (
       <div className="flex h-screen bg-[#f9f9f9] font-sans selection:bg-black selection:text-white w-full">
         {/* Main Content */}

@@ -1,13 +1,14 @@
 package com.aksoftwares.e_commerce_backend.customer.model;
 
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Document("customer")
 @Data
@@ -23,7 +24,6 @@ public class Customer {
     @Indexed(unique = true)
     private String email;
 
-    @Indexed(unique = true)
     private String phone;
 
     private String address;

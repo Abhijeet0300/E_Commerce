@@ -3,6 +3,7 @@ package com.aksoftwares.e_commerce_backend.handler;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,6 +37,7 @@ public class OAuth2LoginClientSuccessHandler extends SavedRequestAwareAuthentica
         OAuth2User user = (OAuth2User) authentication.getPrincipal();
         String email = user.getAttribute("email");
         String name = user.getAttribute("name");
+    
 
         Customer customer = customerRepo.findByEmail(email);
 
@@ -44,6 +46,8 @@ public class OAuth2LoginClientSuccessHandler extends SavedRequestAwareAuthentica
 
             customer.setEmail(email);
             customer.setName(name);
+            customer.setCreatedAt(LocalDateTime.now());
+            customer.setUpdatedAt(LocalDateTime.now());
             customer = customerRepo.save(customer);
         }
 
